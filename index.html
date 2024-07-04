@@ -1,1 +1,43 @@
-test
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JSON 文件读写示例</title>
+</head>
+<body>
+  <h1>JSON 文件读写示例</h1>
+  
+  <button onclick="readJSON()">读取 JSON 文件</button>
+  <button onclick="writeToLocalStorage()">写入到 Local Storage</button>
+  
+  <pre id="jsonContent"></pre>
+  
+  <script>
+    // 定义 JSON 文件的文件名
+    const jsonFileName = 'ac.json';
+    
+    // 读取 JSON 文件内容
+    function readJSON() {
+      fetch(jsonFileName)
+        .then(response => response.json())
+        .then(data => {
+          const jsonString = JSON.stringify(data, null, 2);
+          document.getElementById('jsonContent').textContent = jsonString;
+          localStorage.setItem('jsonData', jsonString); // 将读取的 JSON 数据存储到 Local Storage
+        })
+        .catch(error => console.error('Error reading JSON file:', error));
+    }
+    
+    // 将 Local Storage 中的 JSON 数据写入到页面中
+    function writeToLocalStorage() {
+      const jsonData = localStorage.getItem('jsonData');
+      if (jsonData) {
+        document.getElementById('jsonContent').textContent = jsonData;
+      } else {
+        console.error('No JSON data found in Local Storage.');
+      }
+    }
+  </script>
+</body>
+</html>
